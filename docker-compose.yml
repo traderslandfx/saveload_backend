@@ -1,0 +1,26 @@
+version: "3.9"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=charting_library
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      
+  ms-tradingview-tradersland:
+    image: docker-django-v0.4
+    volumes:
+      - .:/code
+    environment:
+      - DB_NAME_TRADINGVIEW=charting_library
+      - DB_USER_TRADINGVIEW=postgres
+      - DB_PASSWORD_TRADINGVIEW=123456 
+      - DB_HOST_TRADINGVIEW=db
+      - DB_PORT_TRADINGVIEW=5432  
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
