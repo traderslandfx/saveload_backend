@@ -9,9 +9,11 @@ COPY requirements.txt /code//
 
 RUN pip install -r requirements.txt
 COPY . /code/
-RUN python manage.py migrate
 
+ADD start.sh /
+ADD manage.py /
+RUN chmod +x /start.sh
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["/start.sh"]
